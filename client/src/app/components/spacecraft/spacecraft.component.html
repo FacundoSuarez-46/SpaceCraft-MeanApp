@@ -1,0 +1,158 @@
+<body>
+  <nav>
+    <div class="nav-wrapper">
+      <a class="brand-logo" style="color: #ffff;"> Administrador de naves</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a routerLink="/spacecraft" routerLinkActive="active" ariaCurrentWhenActive="page"><img
+              style="width: 40%; margin-left: auto; margin-right: auto; display: block;"
+              src="../../assets/sofkau.png"></a></li>
+        <li><a routerLink="/type" routerLinkActive="active" ariaCurrentWhenActive="page"
+            style="color: #ffff; font-size: larger; font-family: 'Fredoka One', cursive;"><i
+              class="fa-solid fa-shuttle-space" style="color: #55d2fd;"></i> Agregar Tipo</a></li>
+        <li><a routerLink="/gas" routerLinkActive="active" ariaCurrentWhenActive="page"
+            style="color: #ffff; font-size: larger; font-family: 'Fredoka One', cursive;"><i
+              class="fa-solid fa-gas-pump" style="color: #55d2fd;"></i> Agregar Combustible</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content white-text">
+          <div class="row">
+            <div class="col s5" style="border-right: .2rem solid #10137b;">
+              <h3
+                style="text-align: center; font-family: 'Bebas Neue', cursive; color: #ffff; -webkit-text-stroke-width: .1rem; -webkit-text-stroke-color: #10137b;">
+                <i class="fa-brands fa-space-awesome" style="color: #10137b;"></i> Crear nave
+              </h3>
+              <form #spacecraftForm="ngForm" (ngSubmit)="onSubmit(spacecraftForm)">
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="spacecraftService.selectedSpacecraft._id">
+                <div class="row">
+                  <div class="input-field col s11">
+                    <input type="text" name="name" #name="ngModel"
+                      [(ngModel)]="spacecraftService.selectedSpacecraft.name" placeholder="Ingresar nombre" required>
+                    <label style="font-size:x-large;"> <label class="red-text asterisco">*</label> Nombre :</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s11">
+                    <!-- <label>Tipo</label> -->
+                    <select class="browser-default" id="tiposelect" name="type" #name="ngModel"
+                      [(ngModel)]="spacecraftService.selectedSpacecraft.type">
+                      <option value="" disabled selected>Elije un tipo</option>
+                      <option *ngFor="let typ of typeService.types" [value]="typ.name">{{typ.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s11">
+                    <input type="number" name="weight" #name="ngModel"
+                      [(ngModel)]="spacecraftService.selectedSpacecraft.weight" placeholder="Ingresa el peso">
+                    <label style="font-size:x-large;">Peso :</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s11">
+                    <input type="number" name="push" #name="ngModel"
+                      [(ngModel)]="spacecraftService.selectedSpacecraft.push" placeholder="Ingresa el empuje">
+                    <label style="font-size:x-large;">Empuje :</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s11">
+                    <select class="browser-default" id="combustibleselect" name="gas" #name="ngModel"
+                      [(ngModel)]="spacecraftService.selectedSpacecraft.gas">
+                      <option value="" disabled selected>Elije un combustible</option>
+                      <option *ngFor="let gas of gasService.gases" [value]="gas.name">{{gas.name}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s11">
+                    <input type="number" name="speed" #name="ngModel"
+                      [(ngModel)]="spacecraftService.selectedSpacecraft.speed" placeholder="Ingresa la velocidad">
+                    <label style="font-size:x-large;">Velocidad :</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s11">
+                    <input type="text" name="detail" #name="ngModel"
+                      [(ngModel)]="spacecraftService.selectedSpacecraft.detail" placeholder="Ingresa un detalle">
+                    <label style="font-size:x-large;">Detalles :</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s11">
+                    <button class="waves-effect waves-ligh btn-large btn-custom right" type="button"
+                      (click)="resetForm(spacecraftForm)" style="border-radius: 50px; background-color: #f44336;"> <i
+                        class="fa-solid fa-eraser"></i> Limpiar</button>
+                    <button class="waves-effect waves-ligh btn-large btn-custom right" type="submit"
+                      [disabled]="!spacecraftForm.valid" style="border-radius: 50px; background-color: #009688;"> <i
+                        class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="col s7">
+              <h3
+                style="text-align: center; font-family: 'Bebas Neue', cursive; color: #ffff; -webkit-text-stroke-width: .1rem; -webkit-text-stroke-color: #10137b;">
+                <i class="fa-solid fa-list-ul" style="color: #10137b;"></i> Lista de naves
+              </h3>
+
+              <form #spacecraftForm="ngForm" (ngSubmit)="onSubmitFiltro(busqueda.value)">
+                <span style="display: block;">Busqueda por tipo</span>
+                <select type="text" class="browser-default" #busqueda name="word">
+                  <option value="" disabled selected>Elije un tipo</option>
+                  <option *ngFor="let typ of typeService.types" [value]="typ.name">{{typ.name}}</option>
+                </select>
+                <button class="waves-effect waves-ligh btn-large btn-custom left" type="submit"
+                  style="border-radius: 50px; background-color: #009688; margin-top: .7rem;"> <i
+                    class="fa-solid fa-filter"></i>
+                  Filtrar</button>
+              </form>
+
+              <button class="waves-effect waves-ligh btn-large btn-custom right" type="button" (click)="loadAll()"
+                style="border-radius: 50px; background-color: #f44336;"> <i class="fa-brands fa-space-awesome"></i>
+                Ver todos</button>
+
+              <table class="responsive-table highlight">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Peso</th>
+                    <th>Empuje</th>
+                    <th>Combustible</th>
+                    <th>Velocidad</th>
+                    <th>Detalle</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tr style="border-bottom: 1.5px solid #10137b;" *ngFor="let spc of spacecraftService.spacecrafts">
+                  <td style="border-right: 1.5px solid #10137b;">{{spc.name}}</td>
+                  <td style="border-right: 1.5px solid #10137b;">{{spc.type}}</td>
+                  <td style="border-right: 1.5px solid #10137b;">{{spc.weight}}</td>
+                  <td style="border-right: 1.5px solid #10137b;">{{spc.push}}</td>
+                  <td style="border-right: 1.5px solid #10137b;">{{spc.gas}}</td>
+                  <td style="border-right: 1.5px solid #10137b;">{{spc.speed}}</td>
+                  <td style="border-right: 1.5px solid #10137b;">{{spc.detail}}</td>
+                  <td>
+                    <a class="action-btn" (click)="onEdit(spc)">
+                      <i class="fa-solid fa-pen-to-square teal-text"></i>
+                    </a>
+                    <a class="action-btn" (click)="onDelete(spc._id,spacecraftForm)">
+                      <i class="fa-solid fa-trash red-text"></i>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

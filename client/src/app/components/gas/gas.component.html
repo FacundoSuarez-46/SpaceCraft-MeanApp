@@ -1,0 +1,102 @@
+<nav>
+    <div class="nav-wrapper">
+        <a class="brand-logo" style="color: #ffff;">Administrador de combustibles</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a routerLink="/spacecraft" routerLinkActive="active" ariaCurrentWhenActive="page"><img
+                        style="width: 40%; margin-left: auto; margin-right: auto; display: block;"
+                        src="../../assets/sofkau.png"></a></li>
+            <li><a routerLink="/type" routerLinkActive="active" ariaCurrentWhenActive="page"
+                    style="color: #ffff; font-size: larger; font-family: 'Fredoka One', cursive;"><i
+                        class="fa-solid fa-shuttle-space" style="color: #55d2fd;"></i> Agregar Tipo</a></li>
+            <li><a routerLink="/gas" routerLinkActive="active" ariaCurrentWhenActive="page"
+                    style="color: #ffff; font-size: larger; font-family: 'Fredoka One', cursive;"><i
+                        class="fa-solid fa-gas-pump" style="color: #55d2fd;"></i> Agregar Combustible</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="typeposition" class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content white-text">
+                <div class="row">
+                    <div class="col s5" style="border-right: .2rem solid #10137b;">
+                        <h3
+                            style="text-align: center; font-family: 'Bebas Neue', cursive; color: #ffff; -webkit-text-stroke-width: .1rem; -webkit-text-stroke-color: #10137b;">
+                            <i class="fa-brands fa-space-awesome" style="color: #10137b;"></i> Agregar combustible
+                        </h3>
+                        <form #gasForm="ngForm" (ngSubmit)="onSubmit(gasForm)">
+                            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="gasService.selectedGas._id">
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <input type="text" name="name" #name="ngModel"
+                                        [(ngModel)]="gasService.selectedGas.name" placeholder="Ingresar nombre"
+                                        required>
+                                    <label style="font-size:x-large;"> <label class="red-text asterisco">*</label>
+                                        Nombre :</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <input type="number" name="octane" #name="ngModel"
+                                        [(ngModel)]="gasService.selectedGas.octane" placeholder="Ingresa el octanaje">
+                                    <label style="font-size:x-large;">octanaje :</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <input type="text" name="detail" #name="ngModel"
+                                        [(ngModel)]="gasService.selectedGas.detail" placeholder="Ingresa un detalle">
+                                    <label style="font-size:x-large;">Detalle :</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <button class="waves-effect waves-ligh btn-large btn-custom right" type="button"
+                                        (click)="resetForm(gasForm)"
+                                        style="border-radius: 50px; background-color: #f44336;"> <i
+                                            class="fa-solid fa-eraser"></i> Limpiar</button>
+                                    <button class="waves-effect waves-ligh btn-large btn-custom right" type="submit"
+                                        [disabled]="!gasForm.valid"
+                                        style="border-radius: 50px; background-color: #009688;"> <i
+                                            class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                    <div class="col s7">
+                        <h3
+                            style="text-align: center; font-family: 'Bebas Neue', cursive; color: #ffff; -webkit-text-stroke-width: .1rem; -webkit-text-stroke-color: #10137b;">
+                            <i class="fa-solid fa-list-ul" style="color: #10137b;"></i> Lista de combustibles
+                        </h3>
+                        <table class="responsive-table highlight">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Octanaje</th>
+                                    <th>Detalle</th>
+                                </tr>
+                            </thead>
+                            <tr *ngFor="let gas of gasService.gases">
+                                <td>{{gas.name}}</td>
+                                <td>{{gas.octane}}</td>
+                                <td>{{gas.detail}}</td>
+                                <td>
+                                    <a class="action-btn" (click)="onEdit(gas)">
+                                        <i class="fa-solid fa-pen-to-square teal-text"></i>
+                                    </a>
+                                    <a class="action-btn" (click)="onDelete(gas._id,gasForm)">
+                                        <i class="fa-solid fa-trash red-text"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

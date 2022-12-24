@@ -1,0 +1,93 @@
+<nav>
+    <div class="nav-wrapper">
+        <a class="brand-logo" style="color: #ffff;">Administrador de tipos</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a routerLink="/spacecraft" routerLinkActive="active" ariaCurrentWhenActive="page"><img
+                        style="width: 40%; margin-left: auto; margin-right: auto; display: block;"
+                        src="../../assets/sofkau.png"></a></li>
+            <li><a routerLink="/type" routerLinkActive="active" ariaCurrentWhenActive="page"
+                    style="color: #ffff; font-size: larger; font-family: 'Fredoka One', cursive;"><i
+                        class="fa-solid fa-shuttle-space" style="color: #55d2fd;"></i> Agregar Tipo</a></li>
+            <li><a routerLink="/gas" routerLinkActive="active" ariaCurrentWhenActive="page"
+                    style="color: #ffff; font-size: larger; font-family: 'Fredoka One', cursive;"><i
+                        class="fa-solid fa-gas-pump" style="color: #55d2fd;"></i> Agregar Combustible</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="typeposition" class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content white-text">
+                <div class="row">
+                    <div class="col s5" style="border-right: .2rem solid #10137b;">
+                        <h3
+                            style="text-align: center; font-family: 'Bebas Neue', cursive; color: #ffff; -webkit-text-stroke-width: .1rem; -webkit-text-stroke-color: #10137b;">
+                            <i class="fa-brands fa-space-awesome" style="color: #10137b;"></i> Agregar tipo
+                        </h3>
+                        <form #typeForm="ngForm" (ngSubmit)="onSubmit(typeForm)">
+                            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="typeService.selectedType._id">
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <input type="text" name="name" #name="ngModel"
+                                        [(ngModel)]="typeService.selectedType.name" placeholder="Ingresar nombre"
+                                        required>
+                                    <label style="font-size:x-large;"> <label class="red-text asterisco">*</label>
+                                        Nombre :</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <input type="text" name="detail" #name="ngModel"
+                                        [(ngModel)]="typeService.selectedType.detail" placeholder="Ingresa un detalle">
+                                    <label style="font-size:x-large;">Detalles :</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s11">
+                                    <button class="waves-effect waves-ligh btn-large btn-custom right" type="button"
+                                        (click)="resetForm(typeForm)"
+                                        style="border-radius: 50px; background-color: #f44336;"> <i
+                                            class="fa-solid fa-eraser"></i> Limpiar</button>
+                                    <button class="waves-effect waves-ligh btn-large btn-custom right" type="submit"
+                                        [disabled]="!typeForm.valid"
+                                        style="border-radius: 50px; background-color: #009688;"> <i
+                                            class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                    <div class="col s7">
+                        <h3
+                            style="text-align: center; font-family: 'Bebas Neue', cursive; color: #ffff; -webkit-text-stroke-width: .1rem; -webkit-text-stroke-color: #10137b;">
+                            <i class="fa-solid fa-list-ul" style="color: #10137b;"></i> Lista de tipos
+                        </h3>
+                        <table class="responsive-table highlight">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Detalle</th>
+                                </tr>
+                            </thead>
+                            <tr *ngFor="let typ of typeService.types">
+                                <td>{{typ.name}}</td>
+                                <td>{{typ.detail}}</td>
+                                <td>
+                                    <a class="action-btn" (click)="onEdit(typ)">
+                                        <i class="fa-solid fa-pen-to-square teal-text"></i>
+                                    </a>
+                                    <a class="action-btn" (click)="onDelete(typ._id,typeForm)">
+                                        <i class="fa-solid fa-trash red-text"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
