@@ -21,6 +21,13 @@ MongoDB info
 ```
 MeanApp localhost:27017 [direct]
 ```
+***
+App URLS 
+```
+http://localhost:4200/spacecraft
+http://localhost:4200/type
+http://localhost:4200/gas
+```
 
 
 ***
