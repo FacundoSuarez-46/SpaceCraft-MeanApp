@@ -32,6 +32,7 @@ http://localhost:4200/gas
 
 ***
 Here you can view the 3 principal [App screens](https://drive.google.com/drive/folders/1YMtsbU0BFvgxdFTM4I37P49WK-BvxzHZ?usp=sharing)
+and here you can see al the proyect documents [Document of the project] (https://drive.google.com/drive/folders/1CI2zedU1wEn22wHCRP1WowFXiewtMVWZ?usp=share_link)
 
 
 
